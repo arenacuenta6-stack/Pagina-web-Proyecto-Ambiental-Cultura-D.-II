@@ -1,0 +1,538 @@
+cat > /home/aguirre/python/html/proyecto_ambiental.html << 'EOF'
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contaminación Ambiental en CBTIS 251</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+        }
+
+        .portada {
+            height: 100vh;
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .portada h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .portada p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-acceder {
+            padding: 12px 40px;
+            font-size: 1rem;
+            background: white;
+            color: #1b5e20;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-acceder:hover {
+            background: #f0f0f0;
+        }
+
+        nav {
+            background: #1b5e20;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+        }
+
+        .contenido {
+            display: none;
+        }
+
+        .contenido.activo {
+            display: block;
+        }
+
+        section {
+            min-height: 80vh;
+            padding: 50px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #1b5e20;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #2e7d32;
+            padding-bottom: 10px;
+        }
+
+        .portada.oculta {
+            display: none;
+        }
+
+        .intro-content {
+            margin-top: 20px;
+            position: relative;
+        }
+        .intro-imagen {
+            background: #2e7d32;
+            min-height: 300px;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+        }
+        .intro-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .intro-text h3 {
+            color: #1b5e20;
+            font-size: 1.3rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .intro-text p {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .intro-imagen {
+            background: #2e7d32;
+            height: 300px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .subseccion {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #2e7d32;
+        }
+
+        .subseccion h3 {
+            color: #1b5e20;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .subseccion p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .video-placeholder, .imagen-placeholder {
+            background: #ddd;
+            height: 250px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.5rem;
+            margin: 15px 0;
+            text-align: center;
+            overflow: hidden;
+        }
+        .imagen-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .propuestas-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .propuestas-list li {
+            padding: 12px;
+            margin: 10px 0;
+            background: #e8f5e9;
+            border-left: 4px solid #2e7d32;
+            color: #333;
+        }
+
+        .conclusion-box {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 5px;
+            border-left: 4px solid #1b5e20;
+            margin-top: 20px;
+        }
+
+        .conclusion-box p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        #recursos {
+            background: white;
+        }
+
+        .recursos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .recurso-card {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            border: 2px solid #2e7d32;
+        }
+
+        .recurso-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .recurso-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .recurso-card h4 {
+            color: #1b5e20;
+            margin: 10px 0;
+        }
+
+        .recurso-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .portada h1 {
+                font-size: 2rem;
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .btn-arriba {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1b5e20;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: none;
+            font-size: 1.3rem;
+            z-index: 99;
+        }
+
+        .btn-arriba:hover {
+            background: #2e7d32;
+        }
+
+        .btn-arriba.mostrar {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- PORTADA -->
+    <div class="portada" id="portada">
+        <div class="portada-content">
+            <h1>🌍 Cuidemos nuestro Planeta</h1>
+            <p>Contaminación Ambiental en CBTIS 251</p>
+            <button class="btn-acceder" onclick="iniciarContenido()">Acceder</button>
+        </div>
+    </div>
+
+    <!-- NAVEGACIÓN -->
+    <nav id="navegacion" style="display: none;">
+        <ul>
+            <li><a href="#" onclick="irA('introduccion')">Introducción</a></li>
+            <li><a href="#" onclick="irA('problemas')">Problemas</a></li>
+            <li><a href="#" onclick="irA('video')">Video</a></li>
+            <li><a href="#" onclick="irA('propuestas')">Propuestas</a></li>
+            <li><a href="#" onclick="irA('participar')">Participar</a></li>
+            <li><a href="#" onclick="irA('conclusion')">Conclusión</a></li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="contenido" id="contenido">
+
+        <!-- INTRODUCCIÓN -->
+        <section id="introduccion">
+            <h2>Introducción</h2>
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h3>El Problema Ambiental en CBTIS 251</h3>
+                    <p>CBTIS 251 es una institución educativa importante en nuestra comunidad. Sin embargo, como muchas instituciones, enfrenta desafíos ambientales significativos que afectan a estudiantes, maestros y el entorno.</p>
+                    
+                    <h3>Problemáticas Identificadas en la Institución:</h3>
+                    <ul class="propuestas-list">
+                        <li>🚗 Contaminación del aire por vehículos en la institución</li>
+                        <li>♻️ Falta de programas de reciclaje en aulas y áreas comunes</li>
+                        <li>💧 Desperdicio de agua en sanitarios y áreas verdes</li>
+                        <li>🌳 Áreas verdes deterioradas o insuficientes</li>
+                        <li>🔋 Consumo excesivo de energía eléctrica</li>
+                        <li>🗑️ Acumulación de basura sin clasificar adecuadamente</li>
+                    </ul>
+                    <p style="margin-top: 20px;"><strong>Es momento de que TODOS en CBTIS 251 actuemos para mejorar nuestro ambiente.</strong></p>
+
+                </div>
+                <div class="intro-imagen">
+                    <span>🌱 Por un CBTIS 251 más Verde</span>
+                    <img src="nuevo.jpg" alt="CBTIS 251 más verde">
+                </div>
+            </div>
+        </section>
+
+        <!-- PROBLEMAS ESPECÍFICOS -->
+        <section id="problemas">
+            <h2>Problemas Ambientales en CBTIS 251</h2>
+            
+            <div class="subseccion">
+                <h3>1. Contaminación por Residuos Sólidos</h3>
+                <p>En la institución generamos una gran cantidad de residuos diariamente. Muchos estudiantes no separan basura orgánica, inorgánica y reciclable. Esto termina en rellenos sanitarios contaminando el suelo.</p>
+                <div class="imagen-placeholder">
+                    <img src="basura.jpeg">
+                </div>
+            </div>
+
+            <div class="subseccion">
+                <h3>2. Desperdicio de Agua</h3>
+                <p>Los sanitarios, fuentes de agua y áreas de limpieza malgastan agua constantemente. Un grifo goteando o un sanitario roto puede desperdiciar miles de litros al año.</p>
+                <div class="imagen-placeholder">
+                    <img src="baño2.jpeg">
+                </div>
+            </div>
+
+            <div class="subseccion">
+                <h3>3. Consumo Excesivo de Energía</h3>
+                <p>Las luces, aires acondicionados y dispositivos electrónicos funcionan sin control. Muchas aulas permanecen iluminadas innecesariamente contribuyendo a mayores emisiones de carbono.</p>
+                <div class="imagen-placeholder">
+                    <img src="energia.jpeg"
+                </div>
+            </div>
+
+            <div class="subseccion">
+                <h3>4. Falta de Áreas Verdes</h3>
+                <p>CBTIS 251 tiene pocas plantas y árboles. Los espacios verdes ayudan a purificar el aire, reducir la temperatura y mejorar la salud mental de estudiantes y maestros.</p>
+                <div class="imagen-placeholder">
+                    <img src="naturaleza.jpeg"
+                </div>
+            </div>
+        </section>
+
+        <!-- VIDEO DE CONCIENCIA -->
+        <section id="video">
+            <h2>Video de Conciencia Ambiental</h2>
+            
+            <div class="subseccion">
+                <h3>Mira este importante video sobre contaminación ambiental</h3>
+                <p>Este video te muestra cómo la contaminación ambiental afecta nuestras escuelas, comunidades y planeta. Aprenderás acciones simples que puedes hacer ahora.</p>
+                <div class="video-placeholder">
+               <iframe width="560" height="315" src="https://www.youtube.com/embed/gxhS18iSh3E?si=P9TEto9HZb6h2kug" title="YouTube video player" 
+               frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <p><strong>Duración: 5 minutos | Tema: Contaminación ambiental en instituciones educativas</strong></p>
+            </div>
+
+            <div class="subseccion">
+                <h3>Video Explicativo: Cómo Reciclar Correctamente</h3>
+                <p>Aprende la importancia de clasificar residuos y cómo hacerlo correctamente en CBTIS 251.</p>
+                <div class="video-placeholder">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/guxG7FyNMb0?si=qz5QzQGXUYo3soxj" title="YouTube video player" frameborder="0" allow="accelerometer; 
+                    autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROPUESTAS DE ACCIÓN -->
+        <section id="propuestas">
+            <h2>Propuestas de Acción para CBTIS 251</h2>
+            
+            <div class="subseccion">
+                <h3>Iniciativas Concretas que Podemos Implementar</h3>
+                <p>Te presentamos acciones específicas que mejorarán el ambiente de nuestra institución:</p>
+                <ul class="propuestas-list">
+                    <li>🗑️ Instalar contenedores de reciclaje etiquetados en todas las aulas</li>
+                    <li>♻️ Implementar un programa de compostaje en la cafetería</li>
+                    <li>💧 Instalar grifos con sensores de movimiento en sanitarios</li>
+                    <li>🌳 Plantar 100 árboles en los patios de la institución</li>
+                    <li>⚡ Cambiar iluminación a LED en todo el plantel</li>
+                    <li>🌱 Crear huertos verticales en aulas y pasillos</li>
+                    <li>📱 Reducir uso de papel: más tareas digitales</li>
+                    <li>🔋 Instalar paneles solares en techos del colegio</li>
+                    <li>🧹 Organizar jornadas mensuales de limpieza ambiental</li>
+                    <li>📚 Dar talleres sobre educación ambiental a estudiantes</li>
+                </ul>
+            </div>
+
+            <div class="subseccion">
+                <h3>Beneficios de Estas Acciones</h3>
+                <p>Al implementar estas propuestas:</p>
+                <ul class="propuestas-list">
+                    <li>✅ Reduciremos emisiones de carbono</li>
+                    <li>✅ Ahorraremos dinero en servicios (agua, luz)</li>
+                    <li>✅ Mejoraremos la salud de estudiantes y maestros</li>
+                    <li>✅ Crearemos un ambiente más agradable</li>
+                    <li>✅ Formaremos estudiantes conscientes ambientalmente</li>
+                    <li>✅ Posicionaremos a CBTIS 251 como institución verde</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- INVITACIÓN A PARTICIPAR -->
+        <section id="participar">
+            <h2>Te Invitamos a Participar</h2>
+            
+            <div class="subseccion">
+                <h3>¿Cómo Puedes Contribuir?</h3>
+                <p>El cuidado del ambiente es responsabilidad de TODOS. Aquí te mostramos cómo puedes ser parte del cambio:</p>
+                <ul class="propuestas-list">
+                    <li>✅ Únete al equipo ambiental de CBTIS 251</li>
+                    <li>✅ Clasifica tus residuos correctamente en los contenedores</li>
+                    <li>✅ No desperdicies agua en sanitarios ni fuentes</li>
+                    <li>✅ Apaga luces y equipos que no uses</li>
+                    <li>✅ Propón ideas para mejorar el ambiente</li>
+                    <li>✅ Participa en campañas de reforestación</li>
+                    <li>✅ Educa a otros estudiantes sobre el tema</li>
+                    <li>✅ Ayuda en jornadas de limpieza comunitaria</li>
+                </ul>
+            </div>
+
+            <div class="subseccion">
+                <h3>Compromisos que Podemos Hacer Ahora</h3>
+                <p><strong>Yo me comprometo a:</strong></p>
+                <ul class="propuestas-list">
+                    <li>📋 Reciclar correctamente desde hoy</li>
+                    <li>📋 Usar responsablemente el agua</li>
+                    <li>📋 Ahorrar energía apagando equipos</li>
+                    <li>📋 Inspirar a otros a cuidar el ambiente</li>
+                </ul>
+                <p style="margin-top: 20px; font-weight: bold; color: #1b5e20; font-size: 1.1rem;">¡Juntos podemos hacer que CBTIS 251 sea una institución verde y sostenible! 🌍💚</p>
+            </div>
+        </section>
+
+        <!-- CONCLUSIÓN -->
+        <section id="conclusion">
+            <h2>Conclusión</h2>
+            <div class="conclusion-box">
+                <p>La contaminación ambiental en CBTIS 251 es un problema real que afecta a toda nuestra comunidad educativa. Sin embargo, esto también es una oportunidad para actuar juntos.</p>
+                
+                <p>Cada pequeña acción cuenta: reciclar un papel, ahorrar agua, apagar una luz. Si todos en CBTIS 251 hacemos nuestra parte, lograremos una institución más limpia, verde y sostenible.</p>
+                
+                <p>La educación ambiental no es solo teoría en libros. Es vivir cada día siendo conscientes de nuestras acciones y su impacto en el planeta. Como estudiantes de CBTIS 251, tenemos el poder de cambiar las cosas.</p>
+                
+                <p>Desde hoy, comprometámonos a cuidar CBTIS 251 y nuestro planeta. Porque no hay planeta B, y la única institución que tenemos es CBTIS 251.</p>
+
+                <p>Hecho por: Roberto de Jesus Aguirre Adauta y Dayret Joan Castañeda Vela</p>
+                
+                <p style="font-weight: bold; color: #1b5e20; font-size: 1.2rem; text-align: center; margin-top: 25px;">¡El cambio empieza en CBTIS 251, empieza contigo! 🌱🌍💪</p>
+            </div>
+        </section>
+
+    </div>
+
+    <button class="btn-arriba" id="btnArriba" onclick="irAlInicio()">⬆</button>
+
+    <script>
+        function iniciarContenido() {
+            document.getElementById('portada').classList.add('oculta');
+            document.getElementById('navegacion').style.display = 'block';
+            document.getElementById('contenido').classList.add('activo');
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        function irA(seccion) {
+            const elemento = document.getElementById(seccion);
+            if (elemento) {
+                elemento.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function irAlInicio() {
+            document.getElementById('portada').classList.remove('oculta');
+            document.getElementById('navegacion').style.display = 'none';
+            document.getElementById('contenido').classList.remove('activo');
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        window.addEventListener('scroll', function() {
+            const btn = document.getElementById('btnArriba');
+            if (window.scrollY > 300) {
+                btn.classList.add('mostrar');
+            } else {
+                btn.classList.remove('mostrar');
+            }
+        });
+    </script>
+</body>
+</html>
